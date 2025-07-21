@@ -1,41 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const usuariosController = require('../controllers/usuariosController');
-const { authenticateToken, authorizeRoles } = require('../middleware/auth');
+const userController = require('../controllers/userController');
+const { authenticateToken } = require('../middleware/auth');
 
-// CRUD Usuarios - Solo administradores tienen acceso completo
-// GET - Solo administradores pueden ver usuarios
-router.get('/', 
-  authenticateToken, 
-  authorizeRoles(['000', '001']), // Solo Admin y Admin2
-  usuariosController.getAll
-);
+// All user routes are protected
+router.use(authenticateToken);
 
-router.get('/:id', 
-  authenticateToken, 
-  authorizeRoles(['000', '001']), // Solo Admin y Admin2
-  usuariosController.getById
-);
-
-// POST - Solo administradores pueden crear usuarios
-router.post('/', 
-  authenticateToken, 
-  authorizeRoles(['000', '001']), // Solo Admin y Admin2
-  usuariosController.create
-);
-
-// PUT - Solo administradores pueden actualizar usuarios
-router.put('/:id', 
-  authenticateToken, 
-  authorizeRoles(['000', '001']), // Solo Admin y Admin2
-  usuariosController.update
-);
-
-// DELETE - Solo administradores pueden eliminar usuarios
-router.delete('/:id', 
-  authenticateToken, 
-  authorizeRoles(['000', '001']), // Solo Admin y Admin2
-  usuariosController.remove
-);
+router.get('/', userController.getAllUsers);
+router.post('/', userController.createUser);
+router.put('/:id', userController.updateUser);
+router.patch('/:id/status', userController.toggleUserStatus);
+router.delete('/:id', userController.deleteUser);
 
 module.exports = router;

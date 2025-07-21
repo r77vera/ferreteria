@@ -3,11 +3,13 @@ const express = require('express');
 const cors = require('cors');
 
 // Rutas JWT (autenticación tradicional)
-// const productosRouter = require('./routes/productos');
-// const marcasRouter = require('./routes/marcas');
-// const tiposProductoRouter = require('./routes/tiposProducto');
+const productosRouter = require('./routes/productos');
+const marcasRouter = require('./routes/marcas');
+const tiposProductoRouter = require('./routes/tiposProducto');
 // const usuariosRouter = require('./routes/usuarios');
 const authRouter = require('./routes/auth');
+const dashboardRoutes = require('./routes/dashboard');
+const userRoutes = require('./routes/usuarios');
 
 const app = express();
 
@@ -15,7 +17,7 @@ const app = express();
 app.use(cors({
   origin: ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:8080'],
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
@@ -23,11 +25,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Rutas JWT (autenticación tradicional)
-// app.use('/api/productos', productosRouter);
-// app.use('/api/marcas', marcasRouter);
-// app.use('/api/tipos-producto', tiposProductoRouter);
+app.use('/api/productos', productosRouter);
+app.use('/api/marcas', marcasRouter);
+app.use('/api/tipos-producto', tiposProductoRouter);
 // app.use('/api/usuarios', usuariosRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/users', userRoutes);
 // app.use('/api/ventas', require('./routes/ventas'));
 // app.use('/api/tickets', require('./routes/tickets'));
 // app.use('/api/detalles-venta', require('./routes/detallesVenta'));

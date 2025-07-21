@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Home, 
   Package, 
@@ -10,7 +10,8 @@ import {
   Menu,
   X,
   Bell,
-  Search
+  Search,
+  Archive // Icon for Tipos de Producto
 } from 'lucide-react';
 import './Dashboard.css';
 import ProductsView from './views/ProductsView';
@@ -18,12 +19,39 @@ import SalesView from './views/SalesView';
 import UsersView from './views/UsersView';
 import UserProfileView from './views/UserProfileView';
 import ReportsView from './views/ReportsView';
+import MarcasView from './views/MarcasView';
 import SettingsView from './views/SettingsView';
+import TiposProductoView from './views/TiposProductoView'; // Import the new view
 import Sidebar from './Sidebar';
+import { getDashboardStats } from '../services/dashboardService';
+import SalesChart from './SalesChart';
+import TopProductsTable from './TopProductsTable';
+import LowStockTable from './LowStockTable';
+import TopClientsTable from './TopClientsTable';
 
 const Dashboard = ({ user, onLogout }) => {
   const [activeView, setActiveView] = useState('home');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [stats, setStats] = useState(null);
+  const [loadingStats, setLoadingStats] = useState(true);
+  const [errorStats, setErrorStats] = useState(null);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        setLoadingStats(true);
+        const data = await getDashboardStats();
+        setStats(data);
+      } catch (error) {
+        setErrorStats('Error al cargar las estadísticas');
+        console.error(error);
+      } finally {
+        setLoadingStats(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
 
   // Solo para el header, no para el sidebar
   const menuItems = [
@@ -43,13 +71,13 @@ const Dashboard = ({ user, onLogout }) => {
       case 'perfil':
         return <UserProfileView user={user} />;
       case 'admin':
-        return <div>Administración</div>;
+        return <HomeView user={user} stats={stats} loading={loadingStats} error={errorStats} />;
       case 'usuarios':
         return <UsersView />;
       case 'tipoproducto':
-        return <div>Tipo de Producto</div>;
+        return <TiposProductoView />;
       case 'marcas':
-        return <div>Marcas</div>;
+        return <MarcasView/>;
       case 'productos':
         return <ProductsView />;
       case 'ventas':
@@ -59,7 +87,7 @@ const Dashboard = ({ user, onLogout }) => {
       case 'settings':
         return <SettingsView />;
       default:
-        return <HomeView user={user} />;
+        return <HomeView user={user} stats={stats} loading={loadingStats} error={errorStats} />;
     }
   };
 
@@ -112,66 +140,59 @@ const Dashboard = ({ user, onLogout }) => {
 };
 
 // Home View Component
-const HomeView = ({ user }) => {
-  const stats = [
-    { label: 'Productos', value: '1,234', change: '+12%', color: 'blue' },
-    { label: 'Ventas Hoy', value: '$2,456', change: '+8%', color: 'green' },
-    { label: 'Clientes', value: '567', change: '+5%', color: 'purple' },
-    { label: 'Pedidos', value: '89', change: '+15%', color: 'orange' },
+const HomeView = ({ user, stats, loading, error }) => {
+    if (loading) {
+    return <div>Cargando estadísticas...</div>;
+  }
+
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
+
+  const displayStats = [
+    { label: 'Productos', value: stats?.totalProducts || 0, color: 'blue' },
+    { label: 'Total Ventas', value: `S/. ${(stats?.totalSales || 0).toFixed(2)}`, color: 'green' },
+    { label: 'Clientes', value: stats?.totalClients || 0, color: 'purple' },
+    { label: 'Pedidos', value: stats?.totalOrders || 0, color: 'orange' },
   ];
 
   return (
     <div className="home-view">
       <div className="welcome-section">
-        <h2>¡Bienvenido, {user.usuario}!</h2>
+        <h2>¡Bienvenido, {user.user.nombre}!</h2>
         <p>Aquí tienes un resumen de tu ferretería</p>
       </div>
 
-      <div className="stats-grid">
-        {stats.map((stat, index) => (
+            <div className="stats-grid">
+        {displayStats.map((stat, index) => (
           <div key={index} className={`stat-card ${stat.color}`}>
             <div className="stat-value">{stat.value}</div>
             <div className="stat-label">{stat.label}</div>
-            <div className="stat-change">{stat.change}</div>
+            
           </div>
         ))}
       </div>
 
       <div className="dashboard-widgets">
-        <div className="widget">
-          <h3>Ventas Recientes</h3>
-          <div className="recent-sales">
-            <div className="sale-item">
-              <span>Martillo Stanley</span>
-              <span>$25.99</span>
-            </div>
-            <div className="sale-item">
-              <span>Tornillos x100</span>
-              <span>$12.50</span>
-            </div>
-            <div className="sale-item">
-              <span>Taladro Bosch</span>
-              <span>$89.99</span>
-            </div>
-          </div>
+        <div className="widget full-width-widget">
+          <h3>Resumen de Ventas (Últimos 12 Meses)</h3>
+          {stats?.monthlySales && stats.monthlySales.length > 0 ? (
+            <SalesChart data={stats.monthlySales} />
+          ) : (
+            <p>No hay datos de ventas para mostrar en el gráfico.</p>
+          )}
         </div>
-
+        <div className="widget full-width-widget">
+          <h3>Los 10 productos más vendidos</h3>
+          <TopProductsTable data={stats?.topProducts} />
+        </div>
         <div className="widget">
           <h3>Productos con Poco Stock</h3>
-          <div className="low-stock">
-            <div className="stock-item">
-              <span>Clavos 2"</span>
-              <span className="stock-level low">5 unidades</span>
-            </div>
-            <div className="stock-item">
-              <span>Pintura Blanca</span>
-              <span className="stock-level low">3 galones</span>
-            </div>
-            <div className="stock-item">
-              <span>Cable Eléctrico</span>
-              <span className="stock-level low">2 rollos</span>
-            </div>
-          </div>
+          <LowStockTable data={stats?.lowStockProducts} />
+        </div>
+        <div className="widget">
+          <h3>Los 10 Clientes más recurrentes</h3>
+          <TopClientsTable data={stats?.topClients} />
         </div>
       </div>
     </div>

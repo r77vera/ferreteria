@@ -17,11 +17,22 @@ import {
   ClipboardList,
   UserCircle,
   FileText,
-  X
+  X,
+  Archive
 } from 'lucide-react';
+
 import './Dashboard.css';
 
 const MENU_STRUCTURE = [
+  {
+    id: 'admin',
+    label: 'Dashboard',
+    icon: Shield,
+    roles: ['Super Admin', 'Administrador'],
+    children: [
+      { id: 'admin', label: 'Dashboard', icon: Shield, roles: ['Super Admin', 'Administrador'] }
+    ]
+  },
   {
     id: 'perfil',
     label: 'Perfil',
@@ -32,22 +43,13 @@ const MENU_STRUCTURE = [
     ]
   },
   {
-    id: 'admin',
-    label: 'Administración',
-    icon: Shield,
-    roles: ['Super Admin', 'Administrador'],
-    children: [
-      { id: 'admin', label: 'Administración', icon: Shield, roles: ['Super Admin', 'Administrador'] }
-    ]
-  },
-  {
     id: 'tablas',
     label: 'Tablas',
     icon: Layers,
     roles: ['Super Admin', 'Administrador'],
     children: [
       { id: 'usuarios', label: 'Usuarios', icon: Users, roles: ['Super Admin', 'Administrador'] },
-      { id: 'tipoproducto', label: 'Tipo de Producto', icon: ClipboardList, roles: ['Super Admin', 'Administrador'] },
+      { id: 'tipoproducto', label: 'Tipo de Producto', icon: Archive, roles: ['Super Admin', 'Administrador'] },
       { id: 'marcas', label: 'Marcas', icon: Tag, roles: ['Super Admin', 'Administrador'] },
       { id: 'productos', label: 'Productos', icon: Package, roles: ['Super Admin', 'Administrador'] }
     ]
@@ -142,11 +144,11 @@ function Sidebar({ user, activeView, setActiveView, sidebarOpen, setSidebarOpen,
   return (
     <aside className={`sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
       <div className="sidebar-header">
-  <h2>FERRETERIA</h2>
-  <button className="sidebar-toggle" onClick={() => setSidebarOpen(false)}>
-    <X size={24} />
-  </button>
-</div>
+        <h2>FERRETERIA</h2>
+        <button className="sidebar-toggle" onClick={() => setSidebarOpen(false)}>
+          <X size={24} />
+        </button>
+      </div>
       <nav className="sidebar-nav">
         {renderMenu()}
       </nav>

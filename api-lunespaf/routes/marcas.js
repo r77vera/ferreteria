@@ -5,26 +5,26 @@ const { authenticateToken, authorizeRoles, optionalAuth } = require('../middlewa
 
 // Rutas de Marcas con protección JWT
 // GET - Acceso público para consultar marcas
-router.get('/', optionalAuth, marcasController.getAll);
-router.get('/:id', optionalAuth, marcasController.getById);
+router.get('/', optionalAuth, marcasController.getAllMarcas);
+router.get('/:id', optionalAuth, marcasController.getMarcaById);
 
 // POST/PUT/DELETE - Solo administradores y vendedores
 router.post('/', 
   authenticateToken, 
   authorizeRoles(['000', '001', '002']), // Admin, Admin2, Vendedor
-  marcasController.create
+  marcasController.createMarca
 );
 
 router.put('/:id', 
   authenticateToken, 
   authorizeRoles(['000', '001', '002']), // Admin, Admin2, Vendedor
-  marcasController.update
+  marcasController.updateMarca
 );
 
 router.delete('/:id', 
   authenticateToken, 
   authorizeRoles(['000', '001']), // Solo Admin y Admin2
-  marcasController.remove
+  marcasController.deleteMarca
 );
 
 module.exports = router;

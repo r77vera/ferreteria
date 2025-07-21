@@ -30,6 +30,7 @@ module.exports = (sequelize) => {
     imagen: {
       type: DataTypes.STRING(50),
       allowNull: false,
+      defaultValue: 'default.png',
       comment: 'Nombre del archivo de imagen'
     },
     estado: {
