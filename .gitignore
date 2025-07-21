@@ -1,0 +1,8 @@
+# Ignorar archivo ferreteria.zip
+ferreteria.zip
+
+# Ignorar carpeta ferreteria
+ferreteria/
+
+# Ignorar todas las carpetas node_modules sin importar dónde estén
+**/node_modules/
