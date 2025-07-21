@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { getMarcas, createMarca, updateMarca, deleteMarca } from '../../services/marcasService';
 import Modal from '../common/Modal';
 import MarcaForm from '../common/MarcaForm'; // This will be created next
+import Spinner from '../common/Spinner';
 import './UsersView.css'; // Reusing styles
 
 const MarcasView = () => {
@@ -88,7 +89,7 @@ const MarcasView = () => {
     (marca.nombreMarca || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  if (loading) return <div className="loading-spinner">Cargando...</div>;
+  if (loading) return <Spinner />;
   if (error) return <div className="error-message">{error}</div>;
 
   return (

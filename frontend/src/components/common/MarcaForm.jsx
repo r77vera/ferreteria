@@ -41,8 +41,8 @@ const MarcaForm = ({ onSave, onCancel, marca }) => {
         />
       </div>
       <div className="form-actions">
-        <button type="button" onClick={onCancel} className="cancel-btn">Cancelar</button>
-        <button type="submit" className="save-btn">Guardar</button>
+        <button type="button" onClick={onCancel} className="btn-cancel">Cancelar</button>
+        <button type="submit" className="btn-save">Guardar</button>
       </div>
     </form>
   );

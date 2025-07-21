@@ -22,6 +22,13 @@ router.put('/:id',
   productosController.updateProducto
 );
 
+// PATCH - Ruta para agregar stock
+router.patch('/:id/stock',
+  authenticateToken,
+  authorizeRoles(['000', '001', '002']),
+  productosController.addStock
+);
+
 // DELETE - Solo administradores pueden eliminar productos
 router.delete('/:id', 
   authenticateToken, 

@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { getTiposProducto, createTipoProducto, updateTipoProducto, deleteTipoProducto } from '../../services/tiposProductoService';
 import Modal from '../common/Modal';
 import TipoProductoForm from '../common/TipoProductoForm'; // Import the form
+import Spinner from '../common/Spinner';
 import './UsersView.css'; // Reusing styles for consistency
 
 const TiposProductoView = () => {
@@ -93,7 +94,7 @@ const TiposProductoView = () => {
     (tipo.nombretipoProducto || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  if (loading) return <div className="loading-spinner">Cargando...</div>;
+  if (loading) return <Spinner />;
   if (error) return <div className="error-message">{error}</div>;
 
   return (

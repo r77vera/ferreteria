@@ -14,7 +14,7 @@ import {
   Archive // Icon for Tipos de Producto
 } from 'lucide-react';
 import './Dashboard.css';
-import ProductsView from './views/ProductsView';
+import ProductosView from './views/ProductosView';
 import SalesView from './views/SalesView';
 import UsersView from './views/UsersView';
 import UserProfileView from './views/UserProfileView';
@@ -79,7 +79,7 @@ const Dashboard = ({ user, onLogout }) => {
       case 'marcas':
         return <MarcasView/>;
       case 'productos':
-        return <ProductsView />;
+        return <ProductosView />;
       case 'ventas':
         return <SalesView />;
       case 'reportes':

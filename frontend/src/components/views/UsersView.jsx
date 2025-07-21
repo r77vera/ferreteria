@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { getUsers, createUser, updateUser, deleteUser, toggleUserStatus } from '../../services/userService';
 import Modal from '../common/Modal';
 import UserForm from '../common/UserForm';
+import Spinner from '../common/Spinner';
 import './UsersView.css';
 
 const UsersView = () => {
@@ -111,7 +112,7 @@ const UsersView = () => {
     return new Date(dateString).toLocaleDateString('es-ES');
   };
 
-  if (loading) return <div className="loading-spinner">Cargando...</div>;
+  if (loading) return <Spinner />;
   if (error) return <div className="error-message">{error}</div>;
 
   return (
