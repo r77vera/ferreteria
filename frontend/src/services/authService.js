@@ -15,4 +15,24 @@ export const login = async (usuario, password) => {
   }
 };
 
+export const changePassword = async (currentPassword, newPassword) => {
+  const token = localStorage.getItem('token');
+  if (!token) throw new Error('No token found');
+
+  try {
+    const response = await axios.put(
+      `${API_URL}/change-password`,
+      { currentPassword, newPassword },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
+
 // Puedes agregar aquí más funciones relacionadas con autenticación (logout, refresh, etc.)

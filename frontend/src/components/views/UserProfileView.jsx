@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { changePassword } from '../../services/authService';
+import Swal from 'sweetalert2';
 import './UserProfileView.css';
 
 const UserProfileView = ({ user }) => {
@@ -6,19 +8,39 @@ const UserProfileView = ({ user }) => {
   const nombreCompleto = `${datos?.nombre || ''} ${datos?.apellido || ''}`;
   const initial = datos?.nombre?.charAt(0).toUpperCase() || 'U';
 
-  const [password, setPassword] = useState('');
+    const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handlePasswordChange = (e) => {
+      const handlePasswordChange = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      alert('Las contraseñas no coinciden');
-    } else {
-      // lógica para cambiar la contraseña
-      console.log('Contraseña nueva:', password);
-      alert('Contraseña actualizada correctamente');
-      setPassword('');
+
+    if (newPassword !== confirmPassword) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Las contraseñas nuevas no coinciden.',
+      });
+      return;
+    }
+
+    try {
+      const data = await changePassword(currentPassword, newPassword);
+      Swal.fire({
+        icon: 'success',
+        title: 'Éxito',
+        text: data.message,
+      });
+      setCurrentPassword('');
+      setNewPassword('');
       setConfirmPassword('');
+    } catch (error) {
+      console.error('Error al cambiar contraseña:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message || 'No se pudo actualizar la contraseña.',
+      });
     }
   };
 
@@ -43,18 +65,28 @@ const UserProfileView = ({ user }) => {
       <div className="profile-details">
         <h3>Cambiar Contraseña</h3>
         <form onSubmit={handlePasswordChange}>
-          <div style={{ marginBottom: '10px' }}>
-            <label><strong>Ingresar nueva contraseña:</strong></label><br />
+                    <div style={{ marginBottom: '10px' }}>
+            <label><strong>Contraseña Actual:</strong></label><br />
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
               required
               style={{ width: '100%', padding: '8px', borderRadius: '8px', border: '1px solid #ccc' }}
             />
           </div>
           <div style={{ marginBottom: '10px' }}>
-            <label><strong>Repetir nueva contraseña:</strong></label><br />
+            <label><strong>Nueva Contraseña:</strong></label><br />
+            <input
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              required
+              style={{ width: '100%', padding: '8px', borderRadius: '8px', border: '1px solid #ccc' }}
+            />
+          </div>
+          <div style={{ marginBottom: '10px' }}>
+            <label><strong>Confirmar Nueva Contraseña:</strong></label><br />
             <input
               type="password"
               value={confirmPassword}
