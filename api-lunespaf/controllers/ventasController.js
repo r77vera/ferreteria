@@ -42,6 +42,21 @@ exports.crearVenta = async (req, res) => {
   try {
     const { dni, cliente, productos, totals, metodoPago = 'EFECTIVO' } = req.body;
 
+    // Asegurar existencia del cliente
+    let clienteDB = null;
+    if (dni) {
+      clienteDB = await Cliente.findByPk(dni);
+      if (!clienteDB) {
+        clienteDB = await Cliente.create({
+          id_Cliente: dni,
+          nombreCliente: cliente?.nombre || cliente?.nombreCliente || '',
+          apellidoCliente: cliente?.apellido || cliente?.apellidoCliente || '',
+          telefonoCliente: cliente?.telefono || null,
+          direccionCliente: cliente?.direccion || null,
+        });
+      }
+    }
+
     // 1. Obtener correlativo
     const { serie, correlativo } = await (async () => {
       const lastPedido = await Pedido.findOne({
