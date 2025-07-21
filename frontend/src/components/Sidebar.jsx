@@ -1,6 +1,7 @@
 // Mejorado Sidebar + Dashboard UI completo
 // Sidebar.js
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 import {
   Home,
   Package,
@@ -84,8 +85,25 @@ function Sidebar({ user, activeView, setActiveView, sidebarOpen, setSidebarOpen,
   const role = user?.user?.tipoEmpleado;
   const [openMenuId, setOpenMenuId] = useState(null);
   console.log(user)
-  const handleToggleMenu = (menuId) => {
+    const handleToggleMenu = (menuId) => {
     setOpenMenuId(openMenuId === menuId ? null : menuId);
+  };
+
+  const handleLogout = () => {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "Estás a punto de cerrar la sesión.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, cerrar sesión',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        onLogout();
+      }
+    });
   };
 
   const renderMenu = () => {
@@ -139,7 +157,7 @@ function Sidebar({ user, activeView, setActiveView, sidebarOpen, setSidebarOpen,
     <span className="user-lastname">{user?.user.apellido}</span>
   </div>
 </div>
-        <button className="logout-btn" onClick={onLogout}>
+        <button className="logout-btn" onClick={handleLogout}>
           <LogOut size={20} />
           <span>Cerrar Sesión</span>
         </button>

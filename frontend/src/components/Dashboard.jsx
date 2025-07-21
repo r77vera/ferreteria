@@ -91,16 +91,7 @@ const Dashboard = ({ user, onLogout }) => {
             </h1>
           </div>
 
-          <div className="header-right">
-            <div className="search-box">
-              <Search size={20} />
-              <input type="text" placeholder="Buscar..." />
-            </div>
-            <button className="notification-btn">
-              <Bell size={20} />
-              <span className="notification-badge">3</span>
-            </button>
-          </div>
+
         </header>
 
         {/* Content Area */}
