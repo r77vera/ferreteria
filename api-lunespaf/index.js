@@ -12,6 +12,7 @@ const authRouter = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard');
 const userRoutes = require('./routes/usuarios');
 const pedidosRoutes = require('./routes/pedidosRoutes');
+const ventasRouter = require('./routes/ventas');
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/clientes', clientesRouter);
 app.use('/api/pedidos', pedidosRoutes);
+app.use('/api/ventas', ventasRouter);
 // app.use('/api/ventas', require('./routes/ventas'));
 // app.use('/api/tickets', require('./routes/tickets'));
 // app.use('/api/detalles-venta', require('./routes/detallesVenta'));

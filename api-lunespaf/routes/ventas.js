@@ -4,6 +4,13 @@ const ventasController = require('../controllers/ventasController');
 const { authenticateToken, authorizeRoles } = require('../middleware/auth');
 
 // Rutas de Ventas con protección JWT y roles
+// Obtener correlativo
+router.get('/correlativo', 
+  authenticateToken, 
+  authorizeRoles(['000', '001', '002', '003']), 
+  ventasController.getCorrelativo
+);
+
 // GET - Administradores y vendedores pueden ver ventas
 router.get('/', 
   authenticateToken, 
