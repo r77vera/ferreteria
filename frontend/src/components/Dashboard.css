@@ -184,9 +184,8 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  flex-shrink: 0;
 }
-
-
 
 .main-header {
   background: linear-gradient(135deg, var(--dark-1) 0%, var(--dark-2) 100%);
