@@ -100,6 +100,7 @@ db.Producto.belongsTo(db.TipoProducto, {
 // Pedido -> DetalleVenta (1:N)
 db.Pedido.hasMany(db.DetalleVenta, {
   foreignKey: 'idPedido',
+  sourceKey: 'idPedido', // Añadido para especificar la clave de origen
   as: 'detalles'
 });
 db.DetalleVenta.belongsTo(db.Pedido, {

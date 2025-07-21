@@ -1,0 +1,86 @@
+/* DetallePedidoModal.css */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: var(--dark-2, #232526);
+  padding: 2rem;
+  border-radius: var(--radius, 12px);
+  width: 90%;
+  max-width: 600px;
+  border: 1px solid var(--border-color, #292929);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  color: var(--text-light, #f5f5f5);
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: var(--text-muted, #7f8c8d);
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  color: var(--text-light, #f5f5f5);
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: var(--accent, #f5b700);
+  border-bottom: 1px solid var(--border-color, #292929);
+  padding-bottom: 1rem;
+}
+
+.modal-content .users-table {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.modal-content .users-table thead th {
+  background-color: var(--dark-1, #181818);
+}
+
+.form-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-cancel {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dark-1, #181818);
+  background-color: var(--accent, #f5b700);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease;
+}
+
+.btn-cancel:hover {
+  background-color: #ffd000;
+  transform: translateY(-1px);
+}

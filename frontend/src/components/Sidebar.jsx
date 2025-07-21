@@ -60,7 +60,7 @@ const MENU_STRUCTURE = [
     icon: ShoppingCart,
     roles: ['Super Admin', 'Administrador', 'Vendedor'],
     children: [
-      { id: 'ventas', label: 'Ordenes', icon: ShoppingCart, roles: ['Super Admin', 'Administrador', 'Vendedor'] }
+      { id: 'pedidos', label: 'Órdenes', icon: ClipboardList, roles: ['Super Admin', 'Administrador', 'Vendedor'] }
     ]
   },
   {

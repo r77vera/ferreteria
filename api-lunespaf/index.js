@@ -10,6 +10,7 @@ const tiposProductoRouter = require('./routes/tiposProducto');
 const authRouter = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard');
 const userRoutes = require('./routes/usuarios');
+const pedidosRoutes = require('./routes/pedidosRoutes');
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use('/api/tipos-producto', tiposProductoRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/pedidos', pedidosRoutes);
 // app.use('/api/ventas', require('./routes/ventas'));
 // app.use('/api/tickets', require('./routes/tickets'));
 // app.use('/api/detalles-venta', require('./routes/detallesVenta'));

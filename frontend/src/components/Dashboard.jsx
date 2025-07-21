@@ -22,6 +22,7 @@ import ReportsView from './views/ReportsView';
 import MarcasView from './views/MarcasView';
 import SettingsView from './views/SettingsView';
 import TiposProductoView from './views/TiposProductoView'; // Import the new view
+import PedidosView from './views/PedidosView';
 import Sidebar from './Sidebar';
 import { getDashboardStats } from '../services/dashboardService';
 import SalesChart from './SalesChart';
@@ -61,7 +62,7 @@ const Dashboard = ({ user, onLogout }) => {
     { id: 'tipoproducto', label: 'Tipo de Producto' },
     { id: 'marcas', label: 'Marcas' },
     { id: 'productos', label: 'Productos' },
-    { id: 'ventas', label: 'Ordenes' },
+    { id: 'pedidos', label: 'Órdenes' },
     { id: 'reportes', label: 'Reportes' },
     { id: 'settings', label: 'Configuración' }
   ];
@@ -80,8 +81,8 @@ const Dashboard = ({ user, onLogout }) => {
         return <MarcasView/>;
       case 'productos':
         return <ProductosView />;
-      case 'ventas':
-        return <SalesView />;
+      case 'pedidos':
+        return <PedidosView />;
       case 'reportes':
         return <ReportsView />;
       case 'settings':

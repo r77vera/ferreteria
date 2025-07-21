@@ -5,6 +5,7 @@ module.exports = (sequelize) => {
     idPedido: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
       references: {
         model: 'tb_pedido',
         key: 'idPedido'
@@ -14,6 +15,7 @@ module.exports = (sequelize) => {
     idProducto: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
       references: {
         model: 'tb_producto',
         key: 'idProducto'
@@ -33,6 +35,8 @@ module.exports = (sequelize) => {
   }, {
     tableName: 'tb_detalle_pedido',
     timestamps: false,
+    // Indicate that the model does not have a default `id` field
+    id: false,
     charset: 'utf8mb4',
     collate: 'utf8mb4_general_ci',
     indexes: [
