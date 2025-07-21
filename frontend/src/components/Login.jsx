@@ -3,6 +3,7 @@ import { Eye, EyeOff, LogIn } from 'lucide-react';
 import './Login.css';
 import avatarSvg from '../assets/avatar.svg'; // tu logo o imagen
 import { login as loginService } from '../services/authService';
+import Swal from 'sweetalert2';
 
 const Login = ({ onLogin }) => {
   const [formData, setFormData] = useState({ usuario: '', password: '' });
@@ -15,16 +16,26 @@ const Login = ({ onLogin }) => {
     if (error) setError('');
   };
 
-  const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
     try {
       if (formData.usuario && formData.password) {
         const data = await loginService(formData.usuario, formData.password);
-        // Guarda el token y los datos de usuario según tu lógica
         localStorage.setItem('token', data.token);
+
+        await Swal.fire({
+          icon: 'success',
+          title: '¡Bienvenido!',
+          text: 'Inicio de sesión exitoso.',
+          timer: 1500,
+          showConfirmButton: false,
+          timerProgressBar: true,
+        });
+
         onLogin({ usuario: formData.usuario, role: data.role, ...data });
+
       } else {
         setError('Por favor, complete todos los campos');
       }

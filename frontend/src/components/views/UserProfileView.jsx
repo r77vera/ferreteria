@@ -26,20 +26,27 @@ const UserProfileView = ({ user }) => {
 
     try {
       const data = await changePassword(currentPassword, newPassword);
-      Swal.fire({
+            Swal.fire({
+        toast: true,
+        position: 'top-end',
         icon: 'success',
-        title: 'Éxito',
+        title: '¡Éxito!',
         text: data.message,
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
       });
       setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');
     } catch (error) {
       console.error('Error al cambiar contraseña:', error);
-      Swal.fire({
+            Swal.fire({
         icon: 'error',
         title: 'Error',
         text: error.message || 'No se pudo actualizar la contraseña.',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Entendido'
       });
     }
   };
