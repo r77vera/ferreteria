@@ -11,11 +11,11 @@ const pedidosApi = axios.create({
   baseURL: `${API_URL}/pedidos`,
 });
 
-export const getPedidos = async (page = 1, limit = 10, fechaInicio = '', fechaFin = '') => {
+export const getPedidos = async (page = 1, limit = 10, fechaInicio = '', fechaFin = '', idVendedor) => {
   try {
     const response = await pedidosApi.get('/', {
       headers: getAuthHeaders(),
-      params: { page, limit, fechaInicio, fechaFin }
+      params: { page, limit, fechaInicio, fechaFin, idVendedor }
     });
     return response.data;
   } catch (error) {

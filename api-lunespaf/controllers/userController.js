@@ -1,6 +1,7 @@
 const { Usuario, Empleado, TipoEmpleado, sequelize } = require('../models');
 const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
+const md5 = require('md5'); // Para hashear la contraseña con MD5
 
 // Get all users with their employee and role details
 exports.getAllUsers = async (req, res) => {
@@ -24,10 +25,10 @@ exports.getAllUsers = async (req, res) => {
 
 // Create a new user and associated employee
 exports.createUser = async (req, res) => {
-  const { nombre, apellido, dni, usuario, contrasena, idTipoEmpleado } = req.body;
+  const { nombre, apellido, dni, contrasena, idTipoEmpleado } = req.body;
   const t = await sequelize.transaction();
   try {
-    const hashedPassword = await bcrypt.hash(contrasena, 10);
+    const hashedPassword = md5(contrasena);
 
     const newEmpleado = await Empleado.create({
       idEmpleado: dni, // Use DNI as employee ID
@@ -40,7 +41,6 @@ exports.createUser = async (req, res) => {
     }, { transaction: t });
 
     const newUser = await Usuario.create({
-      id: newEmpleado.idEmpleado,
       Usuario: newEmpleado.idEmpleado, // Correctly use the employee ID for the foreign key
       Contraseña: hashedPassword,
     }, { transaction: t });
@@ -82,7 +82,7 @@ exports.updateUser = async (req, res) => {
 
     const userUpdateData = { Usuario: usuario };
     if (contrasena) {
-        userUpdateData.Contraseña = await bcrypt.hash(contrasena, 10);
+        userUpdateData.Contraseña = md5(contrasena);
     }
 
     await userToUpdate.update(userUpdateData, { transaction: t });

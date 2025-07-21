@@ -63,26 +63,27 @@ const MENU_STRUCTURE = [
       { id: 'pedidos', label: 'Órdenes', icon: ClipboardList, roles: ['Super Admin', 'Administrador', 'Vendedor'] }
     ]
   },
-  {
-    id: 'reportes',
-    label: 'Reportes',
-    icon: BarChart3,
-    roles: ['Super Admin', 'Administrador'],
-    children: [
-      { id: 'reportes', label: 'Reportes', icon: FileText, roles: ['Super Admin', 'Administrador'] }
-    ]
-  },
-  {
-    id: 'settings',
-    label: 'Configuración',
-    icon: Settings,
-    roles: ['Super Admin', 'Administrador'],
-    children: [
-      { id: 'settings', label: 'Configuración', icon: Settings, roles: ['Super Admin', 'Administrador'] }
-    ]
-  }
+
 ];
 
+// {
+//   id: 'reportes',
+//   label: 'Reportes',
+//   icon: BarChart3,
+//   roles: ['Super Admin', 'Administrador'],
+//   children: [
+//     { id: 'reportes', label: 'Reportes', icon: FileText, roles: ['Super Admin', 'Administrador'] }
+//   ]
+// },
+// {
+//   id: 'settings',
+//   label: 'Configuración',
+//   icon: Settings,
+//   roles: ['Super Admin', 'Administrador'],
+//   children: [
+//     { id: 'settings', label: 'Configuración', icon: Settings, roles: ['Super Admin', 'Administrador'] }
+//   ]
+// }
 function Sidebar({ user, activeView, setActiveView, sidebarOpen, setSidebarOpen, onLogout }) {
   const role = user?.user?.tipoEmpleado;
   const [openMenuId, setOpenMenuId] = useState(null);

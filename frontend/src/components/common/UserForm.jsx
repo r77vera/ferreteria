@@ -5,7 +5,6 @@ const UserForm = ({ onSave, onCancel, user }) => {
     nombre: '',
     apellido: '',
     dni: '',
-    usuario: '',
     contrasena: '',
     idTipoEmpleado: '002',
   });
@@ -16,7 +15,6 @@ const UserForm = ({ onSave, onCancel, user }) => {
         nombre: user.empleado?.nombreEmpleado || '',
         apellido: user.empleado?.apellidoEmpleado || '',
         dni: user.empleado?.idEmpleado || '',
-        usuario: user.Usuario || '',
         contrasena: '',
         idTipoEmpleado: user.empleado?.idTipoEmpleado || '002',
       });
@@ -25,7 +23,6 @@ const UserForm = ({ onSave, onCancel, user }) => {
         nombre: '',
         apellido: '',
         dni: '',
-        usuario: '',
         contrasena: '',
         idTipoEmpleado: '002',
       });
@@ -63,10 +60,6 @@ const UserForm = ({ onSave, onCancel, user }) => {
         <input type="text" name="dni" value={formData.dni} onChange={handleChange} required disabled={!!user} />
       </div>
       <div className="form-group">
-        <label>Usuario</label>
-        <input type="text" name="usuario" value={formData.usuario} onChange={handleChange} required />
-      </div>
-      <div className="form-group">
         <label>Contraseña {user ? '(opcional)' : ''}</label>
         <input type="password" name="contrasena" value={formData.contrasena} onChange={handleChange} required={!user} />
       </div>
@@ -76,7 +69,6 @@ const UserForm = ({ onSave, onCancel, user }) => {
           <option value="000">Super Admin</option>
           <option value="001">Admin</option>
           <option value="002">Vendedor</option>
-          <option value="003">Cajero</option>
         </select>
       </div>
       <div className="modal-actions">

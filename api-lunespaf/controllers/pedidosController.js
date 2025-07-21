@@ -7,7 +7,7 @@ const fs = require('fs');
 // Obtener todos los pedidos con paginación y filtro por fecha
 exports.getAllPedidos = async (req, res) => {
   try {
-    const { page = 1, limit = 10, fechaInicio, fechaFin } = req.query;
+    const { page = 1, limit = 10, fechaInicio, fechaFin, idVendedor } = req.query;
     const offset = (page - 1) * limit;
 
     let where = {};
@@ -15,6 +15,11 @@ exports.getAllPedidos = async (req, res) => {
       where.Fecha = {
         [Op.between]: [fechaInicio, fechaFin]
       };
+    }
+
+    // Filtrar por vendedor si se proporciona idVendedor
+    if (idVendedor) {
+      where.idEmpleado = idVendedor;
     }
 
     const { count, rows } = await Pedido.findAndCountAll({
