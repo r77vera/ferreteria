@@ -16,6 +16,7 @@ import {
 import './Dashboard.css';
 import ProductosView from './views/ProductosView';
 import SalesView from './views/SalesView';
+import NuevaVentaView from './views/NuevaVentaView';
 import UsersView from './views/UsersView';
 import UserProfileView from './views/UserProfileView';
 import ReportsView from './views/ReportsView';
@@ -63,6 +64,7 @@ const Dashboard = ({ user, onLogout }) => {
     { id: 'marcas', label: 'Marcas' },
     { id: 'productos', label: 'Productos' },
     { id: 'pedidos', label: 'Órdenes' },
+    { id: 'ventas', label: 'Ventas' },
     { id: 'reportes', label: 'Reportes' },
     { id: 'settings', label: 'Configuración' }
   ];
@@ -85,6 +87,8 @@ const Dashboard = ({ user, onLogout }) => {
         return <PedidosView />;
       case 'reportes':
         return <ReportsView />;
+      case 'ventas':
+        return <NuevaVentaView />;
       case 'settings':
         return <SettingsView />;
       default:

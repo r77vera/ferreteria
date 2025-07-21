@@ -8,6 +8,7 @@ import {
   ShoppingCart,
   Users,
   BarChart3,
+  DollarSign,
   Settings,
   LogOut,
   User as UserIcon,
@@ -60,7 +61,8 @@ const MENU_STRUCTURE = [
     icon: ShoppingCart,
     roles: ['Super Admin', 'Administrador', 'Vendedor'],
     children: [
-      { id: 'pedidos', label: 'Órdenes', icon: ClipboardList, roles: ['Super Admin', 'Administrador', 'Vendedor'] }
+      { id: 'pedidos', label: 'Órdenes', icon: ClipboardList, roles: ['Super Admin', 'Administrador', 'Vendedor'] },
+      { id: 'ventas', label: 'Ventas', icon: DollarSign, roles: ['Super Admin', 'Administrador', 'Vendedor'] }
     ]
   },
 
